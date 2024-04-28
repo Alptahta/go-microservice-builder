@@ -3,25 +3,26 @@ package main
 import (
 	"log"
 
-	directorybuilder "github.com/Alptahta/go-microservice-builder/internal/directory_builder"
-	filebuilder "github.com/Alptahta/go-microservice-builder/internal/file_builder"
-	filewriter "github.com/Alptahta/go-microservice-builder/internal/file_writer"
+	directorybuilder "github.com/Alptahta/go-microservice-builder/internal/directory-builder"
+	filebuilder "github.com/Alptahta/go-microservice-builder/internal/file-builder"
+	filewriter "github.com/Alptahta/go-microservice-builder/internal/file-writer"
+	projectinfocollector "github.com/Alptahta/go-microservice-builder/internal/project-info-collector"
 )
 
 func main() {
-	serviceName := "user-service"
+	projectInformation := projectinfocollector.GetProjectInfo()
 
-	err := directorybuilder.CreateSkeletonDirectories(serviceName)
+	err := directorybuilder.CreateSkeletonDirectories(projectInformation.RepositoryName)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	err = filebuilder.CreateGoFiles(serviceName)
+	err = filebuilder.CreateGoFiles(projectInformation.RepositoryName)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	err = filewriter.FillRepositoryFile(serviceName)
+	err = filewriter.FillRepositoryFile(projectInformation)
 	if err != nil {
 		log.Fatalln(err)
 	}

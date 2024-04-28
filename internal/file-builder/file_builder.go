@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	directorybuilder "github.com/Alptahta/go-microservice-builder/internal/directory_builder"
+	directorybuilder "github.com/Alptahta/go-microservice-builder/internal/directory-builder"
 )
 
 func CreateGoFiles(serviceName string) error {
