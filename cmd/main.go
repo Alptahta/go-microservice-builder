@@ -17,7 +17,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	err = filebuilder.CreateGoFiles(projectInformation.RepositoryName)
+	err = filebuilder.CreateGoFiles(projectInformation)
 	if err != nil {
 		log.Fatalln(err)
 	}

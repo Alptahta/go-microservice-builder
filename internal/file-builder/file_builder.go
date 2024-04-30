@@ -5,25 +5,31 @@ import (
 	"os"
 
 	directorybuilder "github.com/Alptahta/go-microservice-builder/internal/directory-builder"
+	projectinfocollector "github.com/Alptahta/go-microservice-builder/internal/project-info-collector"
 )
 
-func CreateGoFiles(serviceName string) error {
-	err := createMainFile(serviceName)
+func CreateGoFiles(projectInformation projectinfocollector.ProjectInformation) error {
+	err := createMainFile(projectInformation.RepositoryName)
 	if err != nil {
 		return err
 	}
 
-	err = createRepositoryFile(serviceName)
+	err = createModelFile(projectInformation.RepositoryName, projectInformation.DomainName)
 	if err != nil {
 		return err
 	}
 
-	err = createServiceFile(serviceName)
+	err = createRepositoryFile(projectInformation.RepositoryName)
 	if err != nil {
 		return err
 	}
 
-	err = createHandlerFile(serviceName)
+	err = createServiceFile(projectInformation.RepositoryName)
+	if err != nil {
+		return err
+	}
+
+	err = createHandlerFile(projectInformation.RepositoryName)
 	if err != nil {
 		return err
 	}
@@ -33,6 +39,16 @@ func CreateGoFiles(serviceName string) error {
 
 func createMainFile(serviceName string) error {
 	path := fmt.Sprintf("%s/%s/%s/%s", serviceName, directorybuilder.CMD, directorybuilder.API_SERVER, MAIN)
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	return nil
+}
+
+func createModelFile(serviceName, domainName string) error {
+	path := fmt.Sprintf("%s/%s/%s/%s.go", serviceName, directorybuilder.INTERNAL, directorybuilder.MODEL, domainName)
 	file, err := os.Create(path)
 	if err != nil {
 		return err
