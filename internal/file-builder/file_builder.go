@@ -24,6 +24,11 @@ func CreateGoFiles(projectInformation projectinfocollector.ProjectInformation) e
 		return err
 	}
 
+	err = createDBFile(projectInformation.RepositoryName, projectInformation.DatabaseName)
+	if err != nil {
+		return err
+	}
+
 	err = createServiceFile(projectInformation.RepositoryName)
 	if err != nil {
 		return err
@@ -59,6 +64,16 @@ func createModelFile(serviceName, domainName string) error {
 
 func createRepositoryFile(serviceName string) error {
 	path := fmt.Sprintf("%s/%s/%s/%s", serviceName, directorybuilder.INTERNAL, directorybuilder.REPOSITORY, REPOSITORY)
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	return nil
+}
+
+func createDBFile(serviceName, dbName string) error {
+	path := fmt.Sprintf("%s/%s/%s/%s.go", serviceName, directorybuilder.INTERNAL, directorybuilder.REPOSITORY, dbName)
 	file, err := os.Create(path)
 	if err != nil {
 		return err

@@ -13,9 +13,9 @@ import (
 )
 
 func FillRepositoryFile(projectInfo projectinfocollector.ProjectInformation) error {
-	repositoryPath := createRepositoryFilePath(projectInfo.RepositoryName)
+	repositoryFilePath := createRepositoryFilePath(projectInfo.RepositoryName)
 
-	f, err := os.OpenFile(repositoryPath, os.O_APPEND|os.O_WRONLY, 0644)
+	f, err := os.OpenFile(repositoryFilePath, os.O_APPEND|os.O_WRONLY, 0644)
 	if err != nil {
 		return err
 	}
@@ -38,8 +38,8 @@ func FillRepositoryFile(projectInfo projectinfocollector.ProjectInformation) err
 }
 
 func createRepositoryFilePath(serviceName string) string {
-	repositoryPath := fmt.Sprintf("%s/%s/%s/%s", serviceName, directorybuilder.INTERNAL, directorybuilder.REPOSITORY, filebuilder.REPOSITORY)
-	return repositoryPath
+	repositoryFilePath := fmt.Sprintf("%s/%s/%s/%s", serviceName, directorybuilder.INTERNAL, directorybuilder.REPOSITORY, filebuilder.REPOSITORY)
+	return repositoryFilePath
 }
 
 func CreateRepositoryInterfaceString(domainName string) string {
@@ -50,9 +50,6 @@ func CreateRepositoryCodes(projectInfo projectinfocollector.ProjectInformation) 
 	var s [][]byte
 	s = append(s,
 		[]byte("package repository\n\n"),
-		[]byte("import \"context\"\n\n"),
-		[]byte("type Repository struct {\n\tctx context.Context\n}\n\n"),
-		[]byte("func CreateRepository(ctx context.Context) *Repository {\n\treturn &Repository{ctx: ctx}\n}\n\n"),
 		[]byte(CreateRepositoryInterfaceString(projectInfo.DomainName)),
 	)
 	return s

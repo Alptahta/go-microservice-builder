@@ -32,6 +32,15 @@ func GetProjectInfo() ProjectInformation {
 	fmt.Println("Example: user")
 	fmt.Scanln(&projectInformation.DomainName)
 
+	var projectDatabaseNameNumber int
+	fmt.Println("Which DB would you like to use")
+	fmt.Println("For postgresql: 1")
+	fmt.Println("For mysql: 2")
+	fmt.Println("For mongodb: 3")
+	fmt.Println("For couchbase: 4")
+	fmt.Scanln(&projectDatabaseNameNumber)
+	projectInformation.DatabaseName = DatabaseNames[projectDatabaseNameNumber]
+
 	fmt.Printf("The Project will be initialize with go mod init %s.com/%s/%s", projectInformation.ProjectHostName, projectInformation.RemoteHostUsername, projectInformation.RepositoryName)
 	return projectInformation
 }
@@ -42,9 +51,17 @@ type ProjectInformation struct {
 	RemoteHostUsername string
 	RepositoryName     string
 	DomainName         string
+	DatabaseName       string
 }
 
 var RemoteHostNames = map[int]string{
 	1: "github",
 	2: "gitlab",
+}
+
+var DatabaseNames = map[int]string{
+	1: "postgresql",
+	2: "mysql",
+	3: "mongodb",
+	4: "couchbase",
 }

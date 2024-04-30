@@ -22,6 +22,16 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	err = filewriter.FillModelFile(projectInformation)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	err = filewriter.FillDBFile(projectInformation)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 	err = filewriter.FillRepositoryFile(projectInformation)
 	if err != nil {
 		log.Fatalln(err)
