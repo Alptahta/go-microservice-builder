@@ -16,7 +16,17 @@ func CreateSkeletonDirectories(serviceName string) error {
 		return err
 	}
 
+	err = createApiServerFolder(serviceName)
+	if err != nil {
+		return err
+	}
+
 	err = createInternalFolder(serviceName)
+	if err != nil {
+		return err
+	}
+
+	err = createModelFolder(serviceName)
 	if err != nil {
 		return err
 	}
@@ -50,8 +60,20 @@ func createCMDFolder(serviceName string) error {
 	return err
 }
 
+func createApiServerFolder(serviceName string) error {
+	path := fmt.Sprintf("%s/%s/%s", serviceName, CMD, API_SERVER)
+	err := os.Mkdir(path, os.ModePerm)
+	return err
+}
+
 func createInternalFolder(serviceName string) error {
 	path := fmt.Sprintf("%s/%s", serviceName, INTERNAL)
+	err := os.Mkdir(path, os.ModePerm)
+	return err
+}
+
+func createModelFolder(serviceName string) error {
+	path := fmt.Sprintf("%s/%s/%s", serviceName, INTERNAL, MODEL)
 	err := os.Mkdir(path, os.ModePerm)
 	return err
 }
