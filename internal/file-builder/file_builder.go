@@ -32,7 +32,7 @@ func CreateGoFiles(serviceName string) error {
 }
 
 func createMainFile(serviceName string) error {
-	path := fmt.Sprintf("%s/%s/%s", serviceName, directorybuilder.CMD, MAIN)
+	path := fmt.Sprintf("%s/%s/%s/%s", serviceName, directorybuilder.CMD, directorybuilder.API_SERVER, MAIN)
 	file, err := os.Create(path)
 	if err != nil {
 		return err
