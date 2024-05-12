@@ -36,4 +36,9 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	err = filewriter.FillServiceFile(projectInformation)
+	if err != nil {
+		log.Fatalln(err)
+	}
 }
