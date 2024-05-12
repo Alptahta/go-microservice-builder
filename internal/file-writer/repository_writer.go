@@ -43,13 +43,14 @@ func createRepositoryFilePath(serviceName string) string {
 }
 
 func CreateRepositoryInterfaceString(domainName string) string {
-	return fmt.Sprintf("type RepositoryInterface interface {\n\tCreate%s() error\n}", cases.Title(language.English, cases.NoLower).String(domainName))
+	return fmt.Sprintf("type RepositoryInterface interface {\n\tCreate%s(ctx context.Context) error\n}", cases.Title(language.English, cases.NoLower).String(domainName))
 }
 
 func CreateRepositoryCodes(projectInfo projectinfocollector.ProjectInformation) [][]byte {
 	var s [][]byte
 	s = append(s,
 		[]byte("package repository\n\n"),
+		[]byte("import \"context\"\n\n"),
 		[]byte(CreateRepositoryInterfaceString(projectInfo.DomainName)),
 	)
 	return s
